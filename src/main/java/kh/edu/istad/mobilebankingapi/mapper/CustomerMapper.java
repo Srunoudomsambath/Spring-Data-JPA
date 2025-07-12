@@ -18,6 +18,7 @@ public interface CustomerMapper {
     // return type is converted data
     // parameter
     CustomerResponse fromCustomer(Customer customer);
+
     Customer toCustomer(CreateCustomerRequest createCustomerRequest);
 
     // Partially update -> find those 3 attributes by using mapper (map the which is not null) (MAP LOGIC)

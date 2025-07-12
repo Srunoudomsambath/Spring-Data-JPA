@@ -1,4 +1,4 @@
-package kh.edu.istad.mobilebankingapi.service;
+package kh.edu.istad.mobilebankingapi.service.impl;
 
 import kh.edu.istad.mobilebankingapi.domain.Customer;
 import kh.edu.istad.mobilebankingapi.dto.CreateCustomerRequest;
@@ -6,6 +6,7 @@ import kh.edu.istad.mobilebankingapi.dto.CustomerResponse;
 import kh.edu.istad.mobilebankingapi.dto.UpdateCustomerRequest;
 import kh.edu.istad.mobilebankingapi.mapper.CustomerMapper;
 import kh.edu.istad.mobilebankingapi.repository.CustomerRepository;
+import kh.edu.istad.mobilebankingapi.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
     private final  CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
