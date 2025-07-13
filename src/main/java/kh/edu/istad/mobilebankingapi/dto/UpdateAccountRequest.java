@@ -1,4 +1,11 @@
 package kh.edu.istad.mobilebankingapi.dto;
 
-public class UpdateAccountRequest {
+import java.math.BigDecimal;
+
+public record UpdateAccountRequest(
+    String accountNumber,
+    String accountCurrency,
+    BigDecimal balance
+
+){
 }

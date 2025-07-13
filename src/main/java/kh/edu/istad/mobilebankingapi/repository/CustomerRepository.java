@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import javax.swing.text.html.Option;
 import java.util.Optional;
 
-//entity, primarykey
+//entity, primaryKey
 public interface CustomerRepository extends JpaRepository<Customer,Integer>{
 
     // hibernate generate check validation
