@@ -99,4 +99,12 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found"));
         accountRepository.delete(account);
     }
+
+    @Override
+    public void disabledAccountByAccountNumber(String accountNumber) {
+        int affected = accountRepository.disableAccountByAccountNumber(accountNumber);
+        if(affected == 0){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
+        }
+    }
 }

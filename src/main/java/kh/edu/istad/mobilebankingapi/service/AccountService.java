@@ -15,6 +15,7 @@ public interface AccountService {
     List<AccountResponse> findAccountByCustomerId(Integer customerId);
     AccountResponse updateAccountByAccountNumber(String accountNumber, UpdateAccountRequest updateAccountRequest);
     void deleteAccountByAccountNumber(String accountNumber);
+    void disabledAccountByAccountNumber(String accountNumber);
 
 
 //    Create a new account

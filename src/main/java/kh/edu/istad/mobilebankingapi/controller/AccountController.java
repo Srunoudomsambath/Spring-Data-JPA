@@ -45,5 +45,9 @@ public class AccountController {
     public void deleteAccountByAccountNumber(@PathVariable String accountNumber) {
         accountService.deleteAccountByAccountNumber(accountNumber);
     }
-
+    @PatchMapping("disabled/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disabledAccountByAccountNumber(@PathVariable String accountNumber) {
+        accountService.disabledAccountByAccountNumber(accountNumber);
+    }
 }
