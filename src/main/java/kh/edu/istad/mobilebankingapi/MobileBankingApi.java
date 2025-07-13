@@ -1,7 +1,9 @@
 package kh.edu.istad.mobilebankingapi;
 
+import kh.edu.istad.mobilebankingapi.domain.AccountType;
 import kh.edu.istad.mobilebankingapi.domain.Customer;
 import kh.edu.istad.mobilebankingapi.domain.KYC;
+import kh.edu.istad.mobilebankingapi.repository.AccountTypeRepository;
 import kh.edu.istad.mobilebankingapi.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,10 +19,9 @@ public class MobileBankingApi implements CommandLineRunner {
     }
 
     private final CustomerRepository customerRepository;
+    private final AccountTypeRepository accountTypeRepository;
     @Override
     public void run(String... args) throws Exception {
-
-
 
         KYC kyc = new KYC();
         Customer customer = new Customer();
@@ -39,5 +40,14 @@ public class MobileBankingApi implements CommandLineRunner {
         customer.setIsDeleted(false);
 
         customerRepository.save(customer);
+
+        AccountType accountType  = new AccountType();
+        accountType.setName("Saving");
+
+        AccountType accountType1 = new AccountType();
+        accountType1.setName("Current");
+
+        accountTypeRepository.save(accountType);
+        accountTypeRepository.save(accountType1);
     }
 }
