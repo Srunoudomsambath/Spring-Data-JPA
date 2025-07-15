@@ -1,6 +1,8 @@
 package kh.edu.istad.mobilebankingapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import kh.edu.istad.mobilebankingapi.domain.Segment;
+
 public record CreateCustomerRequest(
         @NotBlank(message = "Full name is required")
         String fullName,
@@ -8,6 +10,9 @@ public record CreateCustomerRequest(
         String gender,
         String email,
         String phoneNumber,
-        String remark
+        String remark,
+        CreateKycRequest createKycRequest,
+        Integer segmentId
+
 ) {
 }

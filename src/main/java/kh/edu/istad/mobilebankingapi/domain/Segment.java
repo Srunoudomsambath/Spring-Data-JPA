@@ -1,22 +1,27 @@
 package kh.edu.istad.mobilebankingapi.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
+@Table(name = "segment")
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomerSegment {
+public class Segment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
     private String name;// Gold Silver Regular
+    @Column(nullable = false)
     private Boolean isDeleted;
-    private String benefit; //he
+    private String description;
+
+    // One segment using by many customers
+    @OneToMany(mappedBy = "segment")
+    List<Customer> customers;
 }

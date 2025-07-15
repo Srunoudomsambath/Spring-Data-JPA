@@ -21,8 +21,6 @@ import java.util.List;
 public class CustomerController {
 
     private final CustomerService customerService;
-    private final CustomerRepository customerRepository;
-    private final CustomerMapper customerMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping

@@ -50,5 +50,10 @@ public class Customer {
         @PrimaryKeyJoinColumn
         private KYC kyc;
 
+        //many customers has only one segment
+        @ManyToOne
+        @JoinColumn(name = "segment")
+        private Segment segment;
+
 
 }

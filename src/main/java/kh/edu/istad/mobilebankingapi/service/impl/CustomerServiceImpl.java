@@ -1,11 +1,16 @@
 package kh.edu.istad.mobilebankingapi.service.impl;
 
 import kh.edu.istad.mobilebankingapi.domain.Customer;
+import kh.edu.istad.mobilebankingapi.domain.KYC;
+import kh.edu.istad.mobilebankingapi.domain.Segment;
 import kh.edu.istad.mobilebankingapi.dto.CreateCustomerRequest;
 import kh.edu.istad.mobilebankingapi.dto.CustomerResponse;
 import kh.edu.istad.mobilebankingapi.dto.UpdateCustomerRequest;
 import kh.edu.istad.mobilebankingapi.mapper.CustomerMapper;
+import kh.edu.istad.mobilebankingapi.mapper.KycMapper;
 import kh.edu.istad.mobilebankingapi.repository.CustomerRepository;
+import kh.edu.istad.mobilebankingapi.repository.KYCRepository;
+import kh.edu.istad.mobilebankingapi.repository.SegmentRepository;
 import kh.edu.istad.mobilebankingapi.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +28,9 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
     private final  CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final SegmentRepository  segmentRepository;
+    private final KYCRepository kycRepository;
+    private final KycMapper kycMapper;
 
     @Override
     public CustomerResponse createNew(CreateCustomerRequest createCustomerRequest) {
@@ -36,6 +44,10 @@ public class CustomerServiceImpl implements CustomerService {
         if(customerRepository.existsByPhoneNumber(createCustomerRequest.phoneNumber())){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Phone number already exists");
         }
+        // Check nationalCardId
+        if (kycRepository.existsByNationalCardId(createCustomerRequest.createKycRequest().nationalCardId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "National Card ID already exists");
+        }
 //
 //        Customer customer = new Customer();
 //        customer.setFullName(createCustomerRequest.fullName());
@@ -48,7 +60,16 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setIsDeleted(false);
         customer.setAccounts(new ArrayList<>());
 
+        Segment segment = segmentRepository.findById(createCustomerRequest.segmentId())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Segment not found"));
 
+        KYC kyc = kycMapper.toKYC(createCustomerRequest.createKycRequest());
+        kyc.setIsDeleted(false);
+        kyc.setIsVerified(false);
+        kyc.setCustomer(customer);
+
+        customer.setKyc(kyc);
+        customer.setSegment(segment);
 
         log.info("customer before save : {}", customer);
         //it generate new id
