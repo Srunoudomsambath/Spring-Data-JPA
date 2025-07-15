@@ -15,8 +15,11 @@ public class KYC {
     @Id
 //    @GeneratedValue(strategy = GenerationType.UUID)
     private Integer id;
+    @Column(nullable = false)
     private String nationalCardId;
+    @Column(nullable = false)
     private Boolean isVerified;
+    @Column(nullable = false)
     private Boolean isDeleted;
 
 
