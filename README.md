@@ -59,11 +59,19 @@ This API allows you to manage:
 
 ---
 
-### 🔹 Account Type (`/api/v1/accountType`)
+### 🔹 Account Type (`/api/v1/accountTyp`)
 
 | Method | Endpoint              | Description            |
 |--------|-----------------------|------------------------|
 | GET    | `/api/v1/accountType` | Get all account types  |
+
+---
+
+### 🔹 KYC (`/api/v1/kyc`)
+
+| Method | Endpoint                   | Description            |
+|--------|----------------------------|------------------------|
+| GET    | `/api/v1/kyc/{customerId}` | verifyKycByCustomerId  |
 
 ---
 
