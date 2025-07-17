@@ -4,6 +4,7 @@ package kh.edu.istad.mobilebankingapi.service.impl;
 import kh.edu.istad.mobilebankingapi.domain.Account;
 import kh.edu.istad.mobilebankingapi.domain.AccountType;
 import kh.edu.istad.mobilebankingapi.domain.Customer;
+import kh.edu.istad.mobilebankingapi.domain.Segment;
 import kh.edu.istad.mobilebankingapi.dto.AccountResponse;
 import kh.edu.istad.mobilebankingapi.dto.CreateAccountRequest;
 import kh.edu.istad.mobilebankingapi.dto.UpdateAccountRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,6 +54,16 @@ public class AccountServiceImpl implements AccountService {
 
         account.setCustomer(customer);
         account.setAccountType(accountType);
+        String segmentName = customer.getSegment().getName();
+
+        BigDecimal overLimit = switch (segmentName) {
+            case "Gold" -> new BigDecimal("50000");
+            case "Silver" -> new BigDecimal("10000");
+            case "Regular" -> new BigDecimal("5000");
+            default -> BigDecimal.ZERO;  // Fallback default
+        };
+
+        account.setOverLimit(overLimit);
         accountRepository.save(account);
 
         return accountMapper.fromAccount(account);

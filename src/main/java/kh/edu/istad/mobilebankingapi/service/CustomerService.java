@@ -15,5 +15,6 @@ public interface CustomerService {
     CustomerResponse findByPhoneNumber(String phoneNumber);
     CustomerResponse updateByPhoneNumber(String phoneNumber, UpdateCustomerRequest updateCustomerRequest);
     void deleteByPhoneNumber(String phoneNumber);
-
+    // soft delete (just changing status to true)
+    void disabledCustomerByPhoneNumber(String phoneNumber);
 }

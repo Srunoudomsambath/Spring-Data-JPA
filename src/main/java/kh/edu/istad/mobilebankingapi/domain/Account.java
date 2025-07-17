@@ -27,6 +27,10 @@ public class Account {
     private BigDecimal balance;
     @Column(name = "is_deleted",nullable = false)
     private Boolean isDeleted = false;
+    @Column(name = "over_limit", nullable = false)
+    private BigDecimal overLimit;
+
+
 
 
 
