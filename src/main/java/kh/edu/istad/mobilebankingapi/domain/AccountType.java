@@ -18,8 +18,7 @@ public class AccountType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String name;
+    private String type;
 
     //One account type can be use by many account (
     @OneToMany(mappedBy = "accountType",cascade = CascadeType.ALL)

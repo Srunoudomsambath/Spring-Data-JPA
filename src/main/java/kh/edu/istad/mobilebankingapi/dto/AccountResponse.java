@@ -5,10 +5,12 @@ import jakarta.persistence.Column;
 import java.math.BigDecimal;
 
 public record AccountResponse (
-        String accountNumber,
-        String accountCurrency,
+        String actNo,
+        String actName,
+        String actCurrency,
         BigDecimal balance,
-        BigDecimal overLimit
+        String accountType,
+        Boolean isHide
 
 ){
 

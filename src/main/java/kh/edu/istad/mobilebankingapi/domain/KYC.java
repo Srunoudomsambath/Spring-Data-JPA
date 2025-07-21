@@ -15,18 +15,19 @@ public class KYC {
     @Id
 //    @GeneratedValue(strategy = GenerationType.UUID)
     private Integer id;
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false, length = 12)
     private String nationalCardId;
+
     @Column(nullable = false)
     private Boolean isVerified;
+
     @Column(nullable = false)
     private Boolean isDeleted;
 
 
-    @OneToOne
-    //shared primary key
+    @OneToOne(optional = false)
     @MapsId
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "cust_id")
     private Customer customer;
 
 }

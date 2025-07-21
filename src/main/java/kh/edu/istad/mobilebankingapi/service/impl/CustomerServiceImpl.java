@@ -45,38 +45,30 @@ public class CustomerServiceImpl implements CustomerService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Phone number already exists");
         }
         // Check nationalCardId
-        if (kycRepository.existsByNationalCardId(createCustomerRequest.createKycRequest().nationalCardId())) {
+        if (kycRepository.existsByNationalCardId(createCustomerRequest.nationalCardId())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "National Card ID already exists");
         }
-//
-//        Customer customer = new Customer();
-//        customer.setFullName(createCustomerRequest.fullName());
-//        customer.setEmail(createCustomerRequest.email());
-//        customer.setPhoneNumber(createCustomerRequest.phoneNumber());
-//        customer.setGender(createCustomerRequest.gender());
-//        customer.setRemark(createCustomerRequest.remark());
-        //         ->
-        Customer customer = customerMapper.toCustomer(createCustomerRequest);
-        customer.setIsDeleted(false);
-        customer.setAccounts(new ArrayList<>());
 
-        Segment segment = segmentRepository.findById(createCustomerRequest.segmentId())
+        // Validation customer segment
+        Segment segment = segmentRepository.findBySegment(createCustomerRequest.segment())
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Segment not found"));
 
-        KYC kyc = kycMapper.toKYC(createCustomerRequest.createKycRequest());
-        kyc.setIsDeleted(false);
+        // Map data from DTO
+        Customer customer = customerMapper.toCustomer(createCustomerRequest);
+
+        // Prepare KYC of customer
+        KYC kyc = new KYC();
+        kyc.setNationalCardId(createCustomerRequest.nationalCardId());
         kyc.setIsVerified(false);
+        kyc.setIsDeleted(false);
         kyc.setCustomer(customer);
 
-        customer.setKyc(kyc);
-        customer.setSegment(segment);
 
-        log.info("customer before save : {}", customer);
-        //it generate new id
+        log.info("Customer before save: {}", customer.getId());
+        customer.setSegment(segment);
         customer = customerRepository.save(customer);
 
-        log.info("customer after save : {}", customer.getId());
-
+        log.info("Customer before save: {}", customer.getId());
 //        return CustomerResponse.builder()
 //                .fullName(customer.getFullName())
 //                .gender(customer.getGender())
@@ -130,7 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
 //            customer.setFullName(updateCustomerRequest.fullName());
 //        }
         customerMapper.toCustomerPartially(updateCustomerRequest, customer);
-
+        // set managed segment entity to customer
         customer = customerRepository.save(customer);
 
         return customerMapper.fromCustomer(customer);

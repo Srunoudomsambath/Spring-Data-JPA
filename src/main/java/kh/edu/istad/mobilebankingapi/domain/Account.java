@@ -17,19 +17,25 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "account_number",nullable = false,unique = true,length = 20)
-    private String accountNumber;
-//    @Column(name = "account_type",nullable = false,length = 50)
-//    private String accountType;
-    @Column(name = "account_currency",nullable = false,length = 20)
-    private String accountCurrency;
+    @Column(unique = true, nullable = false, length = 32)
+    private String actNo;
+
+    @Column(nullable = false, length = 50)
+    private String actName;
+
+    @Column(nullable = false, length = 50)
+    private String actCurrency;
+
     @Column(name = "balance",nullable = false)
     private BigDecimal balance;
-    @Column(name = "is_deleted",nullable = false)
-    private Boolean isDeleted = false;
     @Column(name = "over_limit", nullable = false)
     private BigDecimal overLimit;
 
+    @Column(nullable = false)
+    private Boolean isHide;
+
+    @Column(name = "is_deleted",nullable = false)
+    private Boolean isDeleted = false;
 
 
 

@@ -2,19 +2,16 @@ package kh.edu.istad.mobilebankingapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import kh.edu.istad.mobilebankingapi.util.CurrencyUtil;
 
 import java.math.BigDecimal;
 
 public record CreateAccountRequest (
-        @NotBlank(message = "accountNumber must not be blank")
-        String accountNumber,
-        @NotBlank(message = "Please enter Currency")
-        String accountCurrency,
-        @NotNull(message = "Please enter balance")
+        String actNo,
+        String actName,
+        CurrencyUtil actCurrency,
         BigDecimal balance,
-        @NotNull(message = "customerId is required")
-        Integer customerId,
-        @NotNull(message = "accountTypeId is required")
-        Integer accountTypeId
+        String phoneNumber,
+        String accountType
 ) {
 }

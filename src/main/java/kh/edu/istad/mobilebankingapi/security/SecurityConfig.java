@@ -31,6 +31,7 @@ public class SecurityConfig {
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         // 2. make stateless api
+
         return http.build();
 
 

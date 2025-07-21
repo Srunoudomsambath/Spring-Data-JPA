@@ -16,14 +16,14 @@ public class Segment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(nullable = false)
-    private String name;// Gold Silver Regular
+    @Column(nullable = false, unique = true, length = 100)
+    private String segment;// Gold Silver Regular
+    @Column(columnDefinition = "TEXT")
+    private String description;
     @Column(nullable = false)
     private Boolean isDeleted;
-    @Column(nullable = false)
-    private String description;
 
     // One segment using by many customers
-    @OneToMany(mappedBy = "segment")
-    List<Customer> customers;
+    @OneToMany(mappedBy = "segment", fetch = FetchType.EAGER)
+    private List<Customer> customers;
 }
