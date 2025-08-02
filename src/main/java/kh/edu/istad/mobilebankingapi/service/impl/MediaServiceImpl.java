@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -68,6 +70,16 @@ public class MediaServiceImpl implements MediaService {
                 .size(file.getSize())
                 .uri(baseUri + String.format("%s.%s", name, extension))
                 .build();
+    }
+
+    @Override
+    public List<MediaResponse> uploadMultiple(List<MultipartFile> files) {
+
+        List<MediaResponse> responses = new ArrayList<>();
+        for (MultipartFile file : files) {
+            responses.add(upload(file)); // reuse single upload logic
+        }
+        return responses;
     }
 
 }
