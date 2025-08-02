@@ -19,35 +19,39 @@ import java.util.Objects;
 import java.util.UUID;
 
 
+
 @Service
 @RequiredArgsConstructor
-
 public class MediaServiceImpl implements MediaService {
-    private final MediaRepository mediaRepository;
+
     @Value("${media.server-path}")
     private String serverPath;
+
     @Value("${media.base-uri}")
-    private String baseuri;
+    private String baseUri;
+
+    private final MediaRepository mediaRepository;
 
     @Override
     public MediaResponse upload(MultipartFile file) {
 
-        //abc.jpg
         String name = UUID.randomUUID().toString();
 
-        // Find lost index of dot (.)
+        // Find last index of dot (.)
         int lastIndex = Objects.requireNonNull(file.getOriginalFilename())
-                .lastIndexOf(".");
+                .lastIndexOf('.');
         // Extract extension
         String extension = file.getOriginalFilename()
                 .substring(lastIndex + 1);
 
-        // Create path object  (absolute path)
+        // Create path object
         Path path = Paths.get(serverPath + String.format("%s.%s", name, extension));
-        try{
-        Files.copy(file.getInputStream(),path);
-        }catch (IOException e){
-            throw  new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        try {
+            Files.copy(file.getInputStream(), path);
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Media upload failed");
         }
 
         Media media = new Media();
@@ -55,13 +59,15 @@ public class MediaServiceImpl implements MediaService {
         media.setExtension(extension);
         media.setMimeType(file.getContentType());
         media.setIsDeleted(false);
+
         media = mediaRepository.save(media);
 
         return MediaResponse.builder()
                 .name(media.getName())
                 .mimeType(media.getMimeType())
                 .size(file.getSize())
-                .uri(baseuri+ String.format("%s.%s", name, extension))
+                .uri(baseUri + String.format("%s.%s", name, extension))
                 .build();
     }
+
 }
