@@ -22,12 +22,10 @@ public class CustomerUserDetail implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles();
     }
-
     @Override
     public String getPassword() {
         return user.getPassword();
     }
-
     @Override
     public String getUsername() {
         return user.getUsername();

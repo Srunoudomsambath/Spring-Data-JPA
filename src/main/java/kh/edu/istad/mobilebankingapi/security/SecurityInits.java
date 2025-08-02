@@ -21,9 +21,6 @@ public class SecurityInits {
     private final PasswordEncoder passwordEncoder;
     @PostConstruct
     void init() {
-
-
-
         if (userRepository.count() == 0) {
             Role defaultRole = new Role();
             defaultRole.setRole("USER");
