@@ -20,7 +20,8 @@ public class Media {
 
     @Column(nullable = false, length = 20)
     private String extension;
-
+    @Column(unique = true, nullable = false, length = 180)
+    private String filename;
     @Column(nullable = false,length =160)
     private String mimeType;
     @Column(nullable = false)
